@@ -2,14 +2,6 @@
 
 class OgAccess extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG entity access',
-      'description' => 'Test the access provided by OG API.',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og', 'entity_feature');
   }
@@ -111,14 +103,6 @@ class OgAccess extends DrupalWebTestCase {
  * Test Group node access. This will test nodes that are groups and group content.
  */
 class OgNodeAccess extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'OG node access',
-      'description' => 'Test strict node access permissions for group nodes and group content.',
-      'group' => 'Organic groups',
-    );
-  }
 
   function setUp() {
     parent::setUp('og');
@@ -345,14 +329,6 @@ class OgNodeAccess extends DrupalWebTestCase {
  */
 class OgMetaData extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG metadata',
-      'description' => 'Test the metadata properties.',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og', 'entity_feature');
   }
@@ -438,14 +414,6 @@ class OgMetaData extends DrupalWebTestCase {
  * Test Group content handeling.
  */
 class OgGroupAndUngroup extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'OG group and ungroup',
-      'description' => 'Test the group and ungrouping of content with a group.',
-      'group' => 'Organic groups',
-    );
-  }
 
   function setUp() {
     parent::setUp('og', 'entity_feature');
@@ -687,13 +655,6 @@ class OgGroupAndUngroup extends DrupalWebTestCase {
 }
 
 class OgPermissionsTestCase extends DrupalWebTestCase {
-  public static function getInfo() {
-    return array(
-      'name' => 'OG permissions',
-      'description' => 'Verify that permissions can be added and removed via API.',
-      'group' => 'Organic groups'
-    );
-  }
 
   function setUp() {
     parent::setUp('og', 'entity_feature');
@@ -829,13 +790,6 @@ class OgPermissionsTestCase extends DrupalWebTestCase {
 }
 
 class OgDefaultAccessFieldTestCase extends DrupalWebTestCase {
-  public static function getInfo() {
-    return array(
-      'name' => 'OG default access field',
-      'description' => 'Test groups with default access field.',
-      'group' => 'Organic groups'
-    );
-  }
 
   function setUp() {
     parent::setUp('og', 'entity_feature');
@@ -1084,14 +1038,6 @@ class OgMigrate7000TestCase extends UpgradePathTestCase {
  */
 class OgFieldWidgetTestCase extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG reference widget',
-      'description' => 'Test the OG reference widget behavior.',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og');
 
@@ -1270,14 +1216,6 @@ class OgFieldWidgetTestCase extends DrupalWebTestCase {
  */
 class OgRoleRevoke extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG roles revoke',
-      'description' => 'Test the revocation of group roles',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og', 'entity_feature');
   }
@@ -1408,14 +1346,6 @@ class OgMigrate7200TestCase extends UpdatePathTestCase {
  * Test queying group-audience fields using entityFieldQuery.
  */
 class OgEntityFieldQueryTestCase extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'OG audience fields query',
-      'description' => 'Test querying group-audience fields using entityFieldQuery.',
-      'group' => 'Organic groups',
-    );
-  }
 
   function setUp() {
     parent::setUp('og', 'entity_feature');
@@ -1641,14 +1571,6 @@ class OgEntityFieldQueryTestCase extends DrupalWebTestCase {
  */
 class OgEntityFieldQueryFieldConditionTestCase extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG field condition query',
-      'description' => 'Test querying field condition fields using entityFieldQuery.',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og', 'entity_feature');
 
@@ -1808,14 +1730,6 @@ class OgEntityFieldQueryFieldConditionTestCase extends DrupalWebTestCase {
  */
 class OgAudienceFieldAutoCreateTestCase extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG audience fields auto-create',
-      'description' => 'Test auto attaching a group-audience field to the user entity, if needed, upon adding a new group field.',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og');
   }
@@ -1845,14 +1759,6 @@ class OgAudienceFieldAutoCreateTestCase extends DrupalWebTestCase {
 
 
 class OgBehaviorHandlerTestCase  extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'OG widget behavior',
-      'description' => 'Test the widget behavior of group-audience fields.',
-      'group' => 'Organic groups',
-    );
-  }
 
   function setUp() {
     parent::setUp('og_test', 'entity_feature');
@@ -1990,14 +1896,6 @@ class OgDeleteOrphansTestCase extends DrupalWebTestCase {
 
   public $group_type;
   public $node_type;
-
-  public static function getInfo() {
-    return array(
-      'name' => 'OG orphan delete',
-      'description' => 'Verifying for deleting orphan group content.',
-      'group' => 'Organic groups',
-    );
-  }
 
   function setUp() {
     parent::setUp('og_test');
@@ -2170,15 +2068,6 @@ class OgNonMembersPublishingContentTestCase extends DrupalWebTestCase {
   public $user;
   public $adminUser;
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG non members publishing',
-      'description' => 'Grant access to non members users publishing content with the group passed in the query string.',
-      'group' => 'Organic groups',
-      'dependencies' => array('entityreference_prepopulate'),
-    );
-  }
-
   public function setUp() {
     parent::setUp('og_test', 'entityreference_prepopulate');
 
@@ -2264,14 +2153,6 @@ class OgUserCanPublishGroupContentTypeOnlyInGroup extends DrupalWebTestCase {
   public $site_user;
   public $group_user;
   public $group_content;
-
-  public static function getInfo() {
-    return array(
-      'name' => 'User can publish group content only inside group',
-      'description' => "User with permission to create a group content only in a group can't publish outside of a group.",
-      'group' => 'Organic groups',
-    );
-  }
 
   public function setUp() {
     parent::setUp('og');
@@ -2400,14 +2281,6 @@ class OgAutoCompleteAccessibleGroupsValidation extends DrupalWebTestCase {
   var $group_owner;
   var $group_member;
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Auto complete for non accessible groups',
-      'description' => "Verify the user cannot fill in the auto complete field with the name of a un-accessible group name.",
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og');
 
@@ -2482,14 +2355,6 @@ class OgAutoCompleteAccessibleGroupsValidation extends DrupalWebTestCase {
  */
 class OgSelectAccessibleGroupsValidation extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Select widget for non accessible groups',
-      'description' => "Verify the user cannot fill in the select field with the name of a un-accessible group name.",
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og');
 
@@ -2557,14 +2422,6 @@ class OgSelectAccessibleGroupsValidation extends DrupalWebTestCase {
  */
 class OgAudienceFieldAccessOverrideTestCase extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'OG audience field access settings',
-      'description' => 'Test the ability to use entity access instead of field access for the audience field.',
-      'group' => 'Organic groups',
-    );
-  }
-
   function setUp() {
     parent::setUp('og');
   }
@@ -2604,14 +2461,6 @@ class OgAudienceFieldAccessOverrideTestCase extends DrupalWebTestCase {
  * Verify OG group ref field support delta after saving.
  */
 class OgAudienceFieldDeltaTestCase extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'OG audience field wrapper delta',
-      'description' => 'Testing OG audience field returns the expected values when using entity metadata wrapper delta.',
-      'group' => 'Organic groups',
-    );
-  }
 
   function setUp() {
     parent::setUp('og');

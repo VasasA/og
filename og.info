@@ -9,9 +9,6 @@ type = module
 tags[] = Groups
 tags[] = Account Management
 
-; Test files
-files[] = og.test
-
 ; Migrate destinations
 files[] = includes/migrate/plugins/destinations/og_membership.inc
 
