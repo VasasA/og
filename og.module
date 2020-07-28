@@ -3768,3 +3768,34 @@ function og_flush_caches() {
   );
   return $bins;
 }
+
+/**
+ * Implements hook_autoload_info().
+ */
+function og_autoload_info() {
+  return array(
+    // Entity API controllers.
+    'OgMembershipMetadataController' => 'og.info.inc',
+    'OgMembershipTypeUIController' => 'includes/og.admin.inc',
+    'OgException' => 'includes/og.exception.inc',
+    'OgMembership' => 'includes/og.membership.inc',
+    'OgMembershipType' => 'includes/og.membership_type.inc',
+    'OgMembershipViewsController' => 'includes/views/og.views.inc',
+    // Views plugins.
+    'og_plugin_argument_validate_group' => 'includes/views/handlers/og_plugin_argument_validate_group.inc',
+    'og_plugin_argument_default_user_groups' => 'includes/views/handlers/og_plugin_argument_default_user_groups.inc',
+    // Views fields.
+    'og_handler_field_group_audience_state' => 'includes/views/handlers/og_handler_field_group_audience_state.inc',
+    'og_handler_field_prerender_list' => 'includes/views/handlers/og_handler_field_prerender_list.inc',
+    'og_handler_field_user_roles' => 'includes/views/handlers/og_handler_field_user_roles.inc',
+    'og_handler_field_group_permissions' => 'includes/views/handlers/og_handler_field_group_permissions.inc',
+    'og_handler_field_og_membership_link_edit' => 'includes/views/handlers/og_handler_field_og_membership_link_edit.inc',
+    'og_handler_field_og_membership_link_delete' => 'includes/views/handlers/og_handler_field_og_membership_link_delete.inc',
+    // Views filters.
+    'og_handler_filter_group_audience_state' => 'includes/views/handlers/og_handler_filter_group_audience_state.inc',
+    'og_handler_filter_user_roles' => 'includes/views/handlers/og_handler_filter_user_roles.inc',
+    // Views relationships.
+    'og_handler_relationship' => 'includes/views/handlers/og_handler_relationship.inc',
+    'og_handler_relationship_membership_roles' => 'includes/views/handlers/og_handler_relationship_membership_roles.inc',
+  );
+}

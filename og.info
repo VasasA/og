@@ -6,37 +6,11 @@ dependencies[] = list
 dependencies[] = entityreference
 backdrop = 1.x
 type = module
-
-; Entity API controllers
-files[] = og.info.inc
-files[] = includes/og.admin.inc
-files[] = includes/og.exception.inc
-files[] = includes/og.membership.inc
-files[] = includes/og.membership_type.inc
-files[] = includes/views/og.views.inc
+tags[] = Groups
+tags[] = Account Management
 
 ; Test files
 files[] = og.test
-
-; Views plugins
-files[] = includes/views/handlers/og_plugin_argument_validate_group.inc
-files[] = includes/views/handlers/og_plugin_argument_default_user_groups.inc
-
-; Views fields
-files[] = includes/views/handlers/og_handler_field_group_audience_state.inc
-files[] = includes/views/handlers/og_handler_field_prerender_list.inc
-files[] = includes/views/handlers/og_handler_field_user_roles.inc
-files[] = includes/views/handlers/og_handler_field_group_permissions.inc
-files[] = includes/views/handlers/og_handler_field_og_membership_link_edit.inc
-files[] = includes/views/handlers/og_handler_field_og_membership_link_delete.inc
-
-; Views filters
-files[] = includes/views/handlers/og_handler_filter_group_audience_state.inc
-files[] = includes/views/handlers/og_handler_filter_user_roles.inc
-
-; Views relationships
-files[] = includes/views/handlers/og_handler_relationship.inc
-files[] = includes/views/handlers/og_handler_relationship_membership_roles.inc
 
 ; Migrate destinations
 files[] = includes/migrate/plugins/destinations/og_membership.inc
