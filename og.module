@@ -493,7 +493,7 @@ function og_node_access($node, $op, $account) {
   if ($op == 'create' && og_is_group_content_type('node', $type)) {
     // Save some legwork if the user has the core permission and strict node
     // access is not set.
-    if (!variable_get('og_node_access_strict', TRUE) && user_access("create $type content", $account)) {
+    if (!config_get('og.settings', 'og_node_access_strict') && user_access("create $type content", $account)) {
       // We just ignore: core access will take care of it.
       return NODE_ACCESS_IGNORE;
     }
@@ -528,7 +528,7 @@ function og_node_access($node, $op, $account) {
     }
 
     // Otherwise, ignore or deny based on whether strict node access is set.
-    return variable_get('og_node_access_strict', TRUE) ? NODE_ACCESS_DENY : NODE_ACCESS_IGNORE;
+    return config_get('og.settings', 'og_node_access_strict') ? NODE_ACCESS_DENY : NODE_ACCESS_IGNORE;
   }
   elseif (in_array($op, array('update', 'delete'))) {
     $access = og_user_access_entity('administer group', 'node', $node, $account);
@@ -555,7 +555,7 @@ function og_node_access($node, $op, $account) {
     }
 
     // Check if OG should explicitly deny access or not.
-    return variable_get('og_node_access_strict', TRUE) ? NODE_ACCESS_DENY : NODE_ACCESS_IGNORE;
+    return config_get('og.settings', 'og_node_access_strict') ? NODE_ACCESS_DENY : NODE_ACCESS_IGNORE;
   }
 
   return NODE_ACCESS_IGNORE;
@@ -861,7 +861,7 @@ function og_entity_insert($entity, $entity_type) {
     og_group($entity_type, $id, array('entity' => $entity->uid));
     // Assign roles to group manager.
     $name = 'og_group_manager_default_rids_' . $entity_type . '_' . $bundle;
-    if ($rids = variable_get($name)) {
+    if ($rids = config_get('og.settings', $name)) {
       foreach ($rids as $rid) {
         og_role_grant($entity_type, $id, $entity->uid, $rid);
       }
@@ -887,7 +887,7 @@ function og_entity_update($entity, $entity_type) {
     og_group($entity_type, $id, array('entity' => $entity->uid));
     // Assign roles to group manager.
     $name = 'og_group_manager_default_rids_' . $entity_type . '_' . $bundle;
-    if ($rids = variable_get($name)) {
+    if ($rids = config_get('og.settings', $name)) {
       foreach ($rids as $rid) {
         og_role_grant($entity_type, $id, $entity->uid, $rid);
       }
@@ -1772,7 +1772,7 @@ function og_membership_delete_by_group($entity_type, $entity) {
     return;
   }
 
-  if (variable_get('og_use_queue', FALSE)) {
+  if (config_get('og.settings', 'og_use_queue')) {
     $queue = DrupalQueue::get('og_membership_orphans');
     // Add item to the queue.
     $data = array(
@@ -1781,7 +1781,7 @@ function og_membership_delete_by_group($entity_type, $entity) {
       // Allow implementing modules to determine the disposition (e.g. delete
       // orphan group content).
       'orphans' => array(
-        'delete' => isset($entity->og_orphans['delete']) ? $entity->og_orphans['delete'] : variable_get('og_orphans_delete', FALSE),
+        'delete' => isset($entity->og_orphans['delete']) ? $entity->og_orphans['delete'] : config_get('og.settings', 'og_orphans_delete'),
         'move' => isset($entity->og_orphans['move']) ? $entity->og_orphans['move'] : array(),
       ),
     );
@@ -1836,7 +1836,13 @@ function og_is_group($entity_type, $entity) {
   }
   list(,, $bundle) = entity_extract_ids($entity_type, $entity);
   if (!field_info_instance($entity_type, OG_GROUP_FIELD, $bundle)) {
-    return variable_get("og_is_group__{$entity_type}__{$bundle}", FALSE);
+    $config = config('og.settings');
+    $variable = "og_is_group__{$entity_type}__{$bundle}";
+    if ($config->get($variable) === NULL) {
+      $config->set($variable, FALSE);
+      $config->save();
+    }
+    return $config->get($variable);
   }
   $items = field_get_items($entity_type, $entity, OG_GROUP_FIELD);
 
@@ -2169,7 +2175,7 @@ function og_user_access($group_type, $gid, $string, $account = NULL, $skip_alter
   }
 
   // Group manager has all privileges (if variable is TRUE).
-  if (!empty($account->uid) && variable_get('og_group_manager_full_access', TRUE)) {
+  if (!empty($account->uid) && config_get('og.settings', 'og_group_manager_full_access')) {
     $group = entity_load_single($group_type, $gid);
     if (!empty($group->uid) && $group->uid == $account->uid) {
       return TRUE;
@@ -2614,7 +2620,13 @@ function og_is_group_default_access($group_type, $gid) {
   $bundle = $wrapper->getBundle();
 
   if (!field_info_instance($group_type, OG_DEFAULT_ACCESS_FIELD, $bundle)) {
-    return variable_get("og_is_group_default_access__{$group_type}__{$bundle}", TRUE);
+    $config = config('og.settings');
+    $variable = "og_is_group_default_access__{$group_type}__{$bundle}";
+    if ($config->get($variable) === NULL) {
+      $config->set($variable, TRUE);
+      $config->save();
+    }
+    return $config->get($variable);
   }
 
   if (empty($wrapper->{OG_DEFAULT_ACCESS_FIELD})) {
@@ -2961,7 +2973,7 @@ function og_delete_user_roles_by_group($group_type, $group) {
   if ($roles = og_roles($group_type, $bundle, $gid, TRUE)) {
     foreach ($roles as $rid => $name) {
 
-      if (variable_get('og_maintain_overridden_roles', TRUE) && !empty($global_roles[$name])) {
+      if (config_get('og.settings', 'og_maintain_overridden_roles') && !empty($global_roles[$name])) {
         // Role name exists in the global roles, update the role ID to the
         // global one.
         db_update('og_users_roles')
@@ -3683,7 +3695,7 @@ function og_features_api() {
  * This if compatible with Features 1.x and 2.x
  */
 function og_features_pipe_alter(&$pipe, $data, $export) {
-  if (!variable_get('og_features_ignore_og_fields', FALSE)) {
+  if (!config_get('og.settings', 'og_features_ignore_og_fields')) {
     return;
   }
 
@@ -3762,4 +3774,15 @@ function og_autoload_info() {
     'og_handler_relationship' => 'includes/views/handlers/og_handler_relationship.inc',
     'og_handler_relationship_membership_roles' => 'includes/views/handlers/og_handler_relationship_membership_roles.inc',
   );
+}
+
+/**
+ * Implements hook_config_info().
+ */
+function og_config_info() {
+  $prefixes['og.settings'] = array(
+    'label' => t('Organic groups settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
 }
