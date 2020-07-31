@@ -832,7 +832,7 @@ function og_form_group_manager_validate($form, &$form_state) {
     return;
   }
 
-  form_error($form, t("Can't save entity as group, because user @name can't be subscribed to group and become a manager.", array('@name' => format_username($account))));
+  form_error($form, t("Can't save entity as group, because user @name can't be subscribed to group and become a manager.", array('@name' => user_format_name($account))));
 }
 
 /**

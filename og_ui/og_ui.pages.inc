@@ -69,7 +69,7 @@ function og_ui_subscribe($entity_type, $etid, $field_name = NULL) {
   $message = '';
 
   $params = array();
-  $params['@user'] = format_username($user);
+  $params['@user'] = user_format_name($user);
   // Show the group name only if user has access to it.
   $params['@group'] = entity_access('view', $entity_type, $entity) ?  entity_label($entity_type, $entity) : t('Private group');
 

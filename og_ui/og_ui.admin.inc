@@ -225,7 +225,7 @@ function og_ui_add_users_validate($form, &$form_state) {
   $group_type = $form_state['values']['group_type'];
   $gid = $form_state['values']['gid'];
   $field_name = $form_state['values']['field_name'];
-  $params = array('%name' => format_username($account));
+  $params = array('%name' => user_format_name($account));
   if (!$account) {
     form_set_error('name', t('You have entered an invalid user name.'));
     return;
@@ -270,7 +270,7 @@ function og_ui_add_users_submit($form, &$form_state) {
   }
 
   $group = entity_load_single($group_type, $gid);
-  drupal_set_message(t('%user has been added to the group %group-title.', array('%user' => format_username($account), '%group-title' => entity_label($group_type, $group))));
+  drupal_set_message(t('%user has been added to the group %group-title.', array('%user' => user_format_name($account), '%group-title' => entity_label($group_type, $group))));
 }
 
 /**
