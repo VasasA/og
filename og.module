@@ -1173,7 +1173,7 @@ function og_membership_type_create($name, $values = array()) {
   }
   $values['name'] = $name;
   $values += array(
-    'language' => $language->language,
+    'language' => $language->langcode,
   );
   $wrapper = entity_property_values_create_entity('og_membership_type', $values);
   return $wrapper->value();
@@ -1277,7 +1277,7 @@ function og_membership_create($group_type, $gid, $entity_type, $etid, $field_nam
     'state' => OG_STATE_ACTIVE,
     'created' => time(),
     'field_name' => $field_name,
-    'language' => $language->language,
+    'language' => $language->langcode,
   );
 
   if (!og_is_group_audience_field($field_name)) {
