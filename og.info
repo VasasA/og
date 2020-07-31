@@ -4,6 +4,7 @@ package = Organic groups
 dependencies[] = options
 dependencies[] = list
 dependencies[] = entityreference
+dependencies[] = entity_ui
 backdrop = 1.x
 type = module
 tags[] = Groups
