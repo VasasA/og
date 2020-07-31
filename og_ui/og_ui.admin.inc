@@ -11,6 +11,7 @@
 function og_ui_admin_settings($form_state) {
   $form = array();
 
+  $form['#config'] = 'og_ui.settings';
   $form['og_group_manager_full_access'] = array(
     '#type' => 'checkbox',
     '#title' => t('Group manager full permissions'),
