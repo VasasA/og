@@ -1207,3 +1207,14 @@ function og_ui_migrate_api() {
   );
   return $api;
 }
+
+
+/**
+ * Implements hook_autoload_info().
+ */
+function og_ui_autoload_info() {
+  return array(
+    // Views handler.
+    'og_ui_handler_area_og_membership_overview' => 'includes/views/handlers/og_ui_handler_area_og_membership_overview.inc',
+  );
+}
