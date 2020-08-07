@@ -8,4 +8,4 @@ dependencies[] = entity_ui
 backdrop = 1.x
 type = module
 tags[] = Groups
-tags[] = Account Management
+tags[] = Content Management
