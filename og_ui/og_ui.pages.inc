@@ -56,7 +56,7 @@ function og_ui_subscribe($entity_type, $etid, $field_name = NULL) {
   if (!$user->uid) {
     // Anonymous user can't request membership.
     $dest = drupal_get_destination();
-    if (variable_get('user_register', 1)) {
+    if (config_get('system.core', 'user_register')) {
       drupal_set_message(t('In order to join any group, you must <a href="!login">login</a>. After you have successfully done so, you will need to request membership again.', array('!login' => url("user/login", array('query' => $dest)))));
     }
     else {
@@ -136,7 +136,7 @@ function og_ui_confirm_subscribe($form, &$form_state, $group_type, $gid, $accoun
     if ($state == OG_STATE_ACTIVE) {
       // Determine if a user can subscribe to a private group, when OG-access
       // module is enabled, and the group is set to private.
-      $state = variable_get('og_ui_deny_subscribe_without_approval', TRUE) ? OG_STATE_PENDING : OG_STATE_ACTIVE;
+      $state = config_get('og_ui.settings', 'og_ui_deny_subscribe_without_approval') ? OG_STATE_PENDING : OG_STATE_ACTIVE;
     }
   }
 

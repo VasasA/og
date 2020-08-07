@@ -293,7 +293,7 @@ function og_ui_field_create_instance($instance) {
     return;
   }
 
-  variable_set('menu_rebuild_needed', TRUE);
+  state_set('menu_rebuild_needed', TRUE);
 }
 
 /**
@@ -309,7 +309,7 @@ function og_ui_field_delete_instance($instance) {
     return;
   }
 
-  variable_set('menu_rebuild_needed', TRUE);
+  state_set('menu_rebuild_needed', TRUE);
 }
 
 /**
@@ -1010,14 +1010,25 @@ function og_ui_node_type_update($info) {
  *   The content type name.
  */
 function og_ui_node_type_save($bundle_name) {
-  if (variable_get('og_group_type_' . $bundle_name, FALSE)) {
+  $config = config('og_ui.settings');
+  $variable = 'og_group_type_' . $bundle_name;
+  if ($config->get($variable) === NULL) {
+    $config->set($variable, FALSE);
+    $config->save();
+  }
+  if ($config->get($variable)) {
     og_create_field(OG_GROUP_FIELD, 'node', $bundle_name);
   }
 
-  if (variable_get('og_group_content_type_' . $bundle_name, FALSE) && !og_is_group_content_type('node', $bundle_name)) {
+  $variable = 'og_group_content_type_' . $bundle_name;
+  if ($config->get($variable) === NULL) {
+    $config->set($variable, FALSE);
+    $config->save();
+  }
+  if ($config->get($variable) && !og_is_group_content_type('node', $bundle_name)) {
     $og_field = og_fields_info(OG_AUDIENCE_FIELD);
-    $og_field['field']['target_type'] = variable_get('target_type_' . $bundle_name);
-    $og_field['field']['settings']['handler_settings']['target_bundles'] = variable_get('target_bundles_' . $bundle_name);
+    $og_field['field']['target_type'] = $config->get('target_type_' . $bundle_name);
+    $og_field['field']['settings']['handler_settings']['target_bundles'] = $config->get('target_bundles_' . $bundle_name);
     og_create_field(OG_AUDIENCE_FIELD, 'node', $bundle_name, $og_field);
   }
 
@@ -1029,8 +1040,9 @@ function og_ui_node_type_save($bundle_name) {
     'target_bundles',
   );
   foreach ($vars as $var) {
-    variable_del($var . '_' . $bundle_name);
+    $config->clear($var . '_' . $bundle_name);
   }
+  $config->save();
 }
 
 /**
@@ -1217,4 +1229,16 @@ function og_ui_autoload_info() {
     // Views handler.
     'og_ui_handler_area_og_membership_overview' => 'includes/views/handlers/og_ui_handler_area_og_membership_overview.inc',
   );
+}
+
+
+/**
+ * Implements hook_config_info().
+ */
+function og_ui_config_info() {
+  $prefixes['og_ui.settings'] = array(
+    'label' => t('Organic groups UI'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
 }
