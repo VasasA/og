@@ -1,12 +1,9 @@
 name = Organic groups UI
-description = "Organic groups UI."
-package = "Organic groups"
+description = Organic groups user interface.
+package = Organic groups
 dependencies[] = og
-dependencies[] = views_bulk_operations
-core = 7.x
-version = VERSION
-files[] = og_ui.test
+backdrop = 1.x
+type = module
+tags[] = Groups
+tags[] = Content Management
 configure = admin/config/group
-
-; Views handlers
-files[] = includes/views/handlers/og_ui_handler_area_og_membership_overview.inc
