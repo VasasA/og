@@ -54,9 +54,8 @@ function og_node_create_links_content_type_edit_form($form, &$form_state) {
     if ($field['settings']['target_type'] != 'node') {
       continue;
     }
-    // Use CTools to get the best matching field name.
-    ctools_include('fields');
-    $options[$field_name] = ctools_field_label($field_name) . " ($field_name)";
+    // Use a function from CTools to get the best matching field name.
+    $options[$field_name] = og_ctools_field_label($field_name) . " ($field_name)";
   }
 
   $form['field_name'] = array(

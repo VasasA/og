@@ -47,7 +47,6 @@ function og_field_widget_form(&$form, &$form_state, $field, $instance, $langcode
   }
   $cache[$identifier] = TRUE;
 
-  ctools_include('fields');
 
   $field_modes = array('default');
   $has_admin = FALSE;
@@ -156,7 +155,7 @@ function og_field_widget_form(&$form, &$form_state, $field, $instance, $langcode
       $dummy_form_state['field'][$field_name][$langcode]['items_count'] = !empty($dummy_entity->{$field_name}[$langcode]) ? count($dummy_entity->{$field_name}[$langcode]) : 0;
     }
 
-    $new_element = ctools_field_invoke_field($mocked_instance, 'form', $entity_type, $dummy_entity, $form, $dummy_form_state, array('default' => TRUE));
+    $new_element = og_ctools_field_invoke_field($mocked_instance, 'form', $entity_type, $dummy_entity, $form, $dummy_form_state, array('default' => TRUE));
     $element[$field_mode] = $new_element[$field_name][LANGUAGE_NONE];
     if (in_array($mocked_instance['widget']['type'], array('entityreference_autocomplete', 'entityreference_autocomplete_tags'))) {
       // Change the "Add more" button name so it adds only the needed
