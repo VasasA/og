@@ -1276,7 +1276,7 @@ function og_membership_create($group_type, $gid, $entity_type, $etid, $field_nam
   $values['type'] = $field['settings']['handler_settings']['membership_type'];
 
   $wrapper = og_entity_property_values_create_entity('og_membership', $values);
-  return $wrapper->value();
+  return !empty($wrapper) ? $wrapper->value() : false;
 }
 
 /**
@@ -2060,7 +2060,7 @@ function og_group($group_type, $gid, $values = array(), $save_created = TRUE) {
     $og_membership = og_membership_create($group_type, $gid, $entity_type, $id, $field_name, $values);
   }
 
-  if (empty($og_membership->is_new) || $save_created) {
+  if (is_object($og_membership) && ((empty($og_membership->is_new) || $save_created))) {
     // Pass the entity object along to OgMembership::save() so we don't have
     // to reload it.
     $og_membership->entity = $entity;
