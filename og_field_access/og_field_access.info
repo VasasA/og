@@ -1,8 +1,8 @@
 name = Organic groups field access
-description = "Provide field access based on group."
-package = "Organic groups"
+description = Provide field access based on group.
+package = Organic groups
 dependencies[] = og
-core = 7.x
-
-; Tests
-files[] = og_field_access.test
+backdrop = 1.x
+type = module
+tags[] = Groups
+tags[] = Content Management
