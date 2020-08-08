@@ -10,14 +10,7 @@
  * Implements hook_uninstall().
  */
 function og_access_uninstall() {
-  $vars = array(
-    'og_access_strict_private',
-  );
-  foreach ($vars as $var) {
-    variable_del($var);
-  }
 
-  variable_del(OG_ACCESS_PRIVACY_CHANGE_BATCH_PROCESSING);
 }
 
 /**
