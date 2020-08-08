@@ -1,9 +1,8 @@
 name = Organic groups access control
-description = "Enable access control for private and public groups and group content."
-package = "Organic groups"
+description = Enable access control for private and public groups and group content.
+package = Organic groups
 dependencies[] = og
-core = 7.x
-version = VERSION
-
-; Tests
-files[] = og_access.test
+backdrop = 1.x
+type = module
+tags[] = Groups
+tags[] = Content Management
