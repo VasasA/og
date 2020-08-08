@@ -46,8 +46,8 @@ function _og_context_configure_form_table(&$form) {
   $group_context_providers = $form['#group_context_providers'];
   // Enable url and node context handlers by default.
   $defaults = array('url' => -5, 'node' => -4);
-  $enabled_providers = variable_get("og_context_negotiation_$type", $defaults);
-  $providers_weight = variable_get("og_context_providers_weight_$type", $defaults);
+  $enabled_providers = config_get('og_context.settings', "og_context_negotiation_$type");
+  $providers_weight = config_get('og_context.settings', "og_context_providers_weight_$type");
 
   // Add missing data to the providers lists.
   foreach ($group_context_providers as $id => $provider) {
@@ -172,7 +172,7 @@ function og_context_configure_form_submit($form, &$form_state) {
   }
 
   og_context_negotiation_set($negotiation);
-  variable_set("og_context_providers_weight_$type", $providers_weight);
+  config_set('og_context.settings', "og_context_providers_weight_$type", $providers_weight);
 
   $form_state['redirect'] = 'admin/config/group/context';
   drupal_set_message(t('Group context negotiation configuration saved.'));

@@ -373,7 +373,7 @@ function og_context_negotiation_set($group_context_providers) {
     }
   }
 
-  variable_set("og_context_negotiation_$type", $negotiation);
+  config_set('og_context.settings', "og_context_negotiation_$type", $negotiation);
 }
 
 /**
@@ -406,8 +406,7 @@ function og_context_provider_weight($provider) {
  */
 function og_context_determine_context($group_type, $item = NULL, $check_access = TRUE) {
   // Enable url and node context handlers by default.
-  $defaults = array('url' => -5, 'node' => -4);
-  if (!$enabled_providers = variable_get('og_context_negotiation_group_context', $defaults)) {
+  if (!$enabled_providers = config_get('og_context.settings', 'og_context_negotiation_group_context')) {
     return;
   }
 
@@ -674,4 +673,16 @@ function _og_context_views_page_access($group_type, $perm, $group_id_arg = FALSE
     // Try to get context.
     return og_user_access($group_type, $group['gid'], $perm);
   }
+}
+
+
+/**
+ * Implements hook_config_info().
+ */
+function og_context_config_info() {
+  $prefixes['og_context.settings'] = array(
+    'label' => t('Organic groups context'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
 }
