@@ -136,7 +136,7 @@ function og_ui_group_admin_overview($entity_type, $etid) {
  */
 function og_ui_add_users($form, &$form_state, $group_type, $gid) {
   og_set_breadcrumb($group_type, $gid, array(l(t('Group'), "$group_type/$gid/group")));
-  $group = entity_load_single($group_type, $gid);
+  $group = entity_load($group_type, $gid);
   $label = entity_label($group_type, $group);
   list(,, $bundle) = entity_extract_ids($group_type, $group);
 
@@ -275,7 +275,7 @@ function og_ui_add_users_submit($form, &$form_state) {
     }
   }
 
-  $group = entity_load_single($group_type, $gid);
+  $group = entity_load($group_type, $gid);
   drupal_set_message(t('%user has been added to the group %group-title.', array('%user' => user_format_name($account), '%group-title' => entity_label($group_type, $group))));
 }
 
@@ -284,7 +284,7 @@ function og_ui_add_users_submit($form, &$form_state) {
  */
 function og_ui_edit_membership($form, &$form_state, $group_type, $gid, $og_membership) {
   og_set_breadcrumb($group_type, $gid, array(l(t('Group'), "$group_type/$gid/group")));
-  $group = entity_load_single($group_type, $gid);
+  $group = entity_load($group_type, $gid);
   $label = entity_label($group_type, $group);
   $account = user_load($og_membership->etid);
   list(,, $bundle) = entity_extract_ids($group_type, $group);
@@ -390,7 +390,7 @@ function og_ui_edit_membership_submit($form, &$form_state) {
  */
 function og_ui_delete_membership($form, &$form_state, $group_type, $gid, $og_membership) {
   og_set_breadcrumb($group_type, $gid, array(l(t('Group'), "$group_type/$gid/group")));
-  $group = entity_load_single($group_type, $gid);
+  $group = entity_load($group_type, $gid);
   $label = entity_label($group_type, $group);
   $account = user_load($og_membership->etid);
 
@@ -519,7 +519,7 @@ function og_ui_admin_roles($form, $form_state, $group_type = '', $gid = 0, $bund
   }
   else {
     if ($gid) {
-      $group = entity_load_single($group_type, $gid);
+      $group = entity_load($group_type, $gid);
       list(,, $bundle) = entity_extract_ids($group_type, $group);
     }
 
@@ -639,7 +639,7 @@ function theme_og_ui_admin_new_role($variables) {
   $role_names = $form['role_names']['#value'];
 
   if ($gid) {
-    $group = entity_load_single($group_type, $gid);
+    $group = entity_load($group_type, $gid);
     $default_access = $group && og_is_group_default_access($group_type, $group);
   }
   else {
@@ -686,7 +686,7 @@ function theme_og_ui_admin_new_role($variables) {
  */
 function _og_ui_get_role_names($group_type, $bundle, $gid, $rid) {
   if ($gid) {
-    $group = entity_load_single($group_type, $gid);
+    $group = entity_load($group_type, $gid);
 
     list(,,$bundle) = entity_extract_ids($group_type, $group);
     $gid = og_is_group_default_access($group_type, $group) ? 0 : $gid;
@@ -726,7 +726,7 @@ function og_ui_admin_permissions($form, $form_state, $group_type = '', $gid = 0,
 
   if ($gid) {
     og_set_breadcrumb($group_type, $gid, array(l(t('Group'), "$group_type/$gid/group")));
-    list(, , $bundle) = entity_extract_ids($group_type, entity_load_single($group_type, $gid));
+    list(, , $bundle) = entity_extract_ids($group_type, entity_load($group_type, $gid));
   }
 
   $form['group_type'] = array('#type' => 'value', '#value' => $group_type);
