@@ -106,7 +106,7 @@ function og_menu() {
 function og_entity_info() {
   $items['og_membership_type'] = array(
     'label' => t('OG membership type'),
-    'controller class' => 'EntityAPIControllerExportable',
+    'controller class' => 'OgEntityAPIControllerExportable',
     'entity class' => 'OgMembershipType',
     'base table' => 'og_membership_type',
     'fieldable' => TRUE,
@@ -142,7 +142,7 @@ function og_entity_info() {
   $items['og_membership'] = array(
     'label' => t('OG membership'),
     'entity class' => 'OgMembership',
-    'controller class' => 'EntityAPIController',
+    'controller class' => 'OgEntityAPIController',
     'base table' => 'og_membership',
     'fieldable' => TRUE,
     'entity keys' => array(
@@ -3761,13 +3761,13 @@ function og_entity_type_supports($entity_type, $op) {
     return TRUE;
   }
   if ($op == 'revision delete') {
-    return in_array('EntityAPIControllerInterface', class_implements($info['controller class']));
+    return in_array('OgEntityAPIControllerInterface', class_implements($info['controller class']));
   }
   if ($op == 'form') {
     return (bool) entity_ui_controller($entity_type);
   }
   if ($op != 'access') {
-    return in_array('EntityAPIControllerInterface', class_implements($info['controller class']));
+    return in_array('OgEntityAPIControllerInterface', class_implements($info['controller class']));
   }
   return FALSE;
 }
@@ -4002,6 +4002,7 @@ function og_autoload_info() {
     // Views relationships.
     'og_handler_relationship' => 'includes/views/handlers/og_handler_relationship.inc',
     'og_handler_relationship_membership_roles' => 'includes/views/handlers/og_handler_relationship_membership_roles.inc',
+    'OgEntityAPIController' => 'includes/og.entity.controller.inc',
   );
 }
 
