@@ -1043,9 +1043,11 @@ function og_ui_node_type_save($bundle_name) {
     'target_type',
     'target_bundles',
   );
+  $settings = $config->get('settings');
   foreach ($vars as $var) {
-    $config->clear($var);
+    unset($settings[$var]);
   }
+  $config->set('settings', $settings);
   $config->save();
 }
 
