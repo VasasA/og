@@ -1248,3 +1248,17 @@ function og_ui_config_info() {
   );
   return $prefixes;
 }
+
+/**
+ * Implements hook_node_type_load().
+ */
+function og_ui_node_type_load(&$types) {
+  foreach ($types as $type_name => $type) {
+    $types[$type_name]->settings += array(
+      'og_group_type' => FALSE,
+      'og_group_content_type' => FALSE,
+      'target_type' => NULL,
+      'target_bundles' => NULL,
+    );
+  }
+}
