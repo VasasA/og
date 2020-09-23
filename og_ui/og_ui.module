@@ -1011,25 +1011,11 @@ function og_ui_node_type_update($info) {
  */
 function og_ui_node_type_save($bundle_name) {
   $config = config('node.type.' . $bundle_name);
-  $variable = 'og_group_type';
-  if ($config->get('settings')[$variable] === NULL) {
-    $settings = $config->get('settings');
-    $settings[$variable] = FALSE;
-    $config->set('settings', $settings);
-    $config->save();
-  }
-  if ($config->get('settings')[$variable]) {
+  if ($config->get('settings')['og_group_type']) {
     og_create_field(OG_GROUP_FIELD, 'node', $bundle_name);
   }
 
-  $variable = 'og_group_content_type';
-  if ($config->get('settings')[$variable] === NULL) {
-    $settings = $config->get('settings');
-    $settings[$variable] = FALSE;
-    $config->set('settings', $settings);
-    $config->save();
-  }
-  if ($config->get('settings')[$variable] && !og_is_group_content_type('node', $bundle_name)) {
+  if ($config->get('settings')['og_group_content_type'] && !og_is_group_content_type('node', $bundle_name)) {
     $og_field = og_fields_info(OG_AUDIENCE_FIELD);
     $og_field['field']['target_type'] = $config->get('target_type_' . $bundle_name);
     $og_field['field']['settings']['handler_settings']['target_bundles'] = $config->get('target_bundles_' . $bundle_name);
