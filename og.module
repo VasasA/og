@@ -4003,6 +4003,9 @@ function og_autoload_info() {
     'og_handler_relationship' => 'includes/views/handlers/og_handler_relationship.inc',
     'og_handler_relationship_membership_roles' => 'includes/views/handlers/og_handler_relationship_membership_roles.inc',
     'OgEntityAPIController' => 'includes/og.entity.controller.inc',
+    'OgSelectionHandler' => 'plugins/entityreference/selection/OgSelectionHandler.class.php',
+    'OgBehaviorHandler' => 'plugins/entityreference/behavior/OgBehaviorHandler.class.php',
+    'OgWidgetHandler' => 'plugins/entityreference/behavior/OgWidgetHandler.class.php',
   );
 }
 
@@ -4015,4 +4018,39 @@ function og_config_info() {
     'group' => t('Configuration'),
   );
   return $prefixes;
+}
+
+/**
+ * Implements hook_node_type_load().
+ */
+function og_entityreference_selection_plugins() {
+  $plugins['og'] = array(
+    'title' => t('Organic groups'),
+    'class' => 'OgSelectionHandler',
+    'weight' => -100,
+  );
+  return $plugins;
+}
+
+/**
+ * Implements hook_entityreference_behavior_plugins().
+ */
+function og_entityreference_behavior_plugins() {
+  $plugins['og_behavior'] = array(
+    'title' => t('OG behavior'),
+    'description' => t('Provides a select list for OG filters on this field.'),
+    'class' => 'OgBehaviorHandler',
+    'behavior type' => 'field',
+    'access callback' => FALSE,
+    'force enabled' => TRUE,
+  );
+  $plugins['og_widget'] = array(
+    'title' => t('OG widget'),
+    'description' => t('Provides a select list for OG widget on this field.'),
+    'class' => 'OgWidgetHandler',
+    'behavior type' => 'instance',
+    'access callback' => FALSE,
+    'force enabled' => TRUE,
+  );
+  return $plugins;
 }
