@@ -4002,7 +4002,8 @@ function og_autoload_info() {
     // Views relationships.
     'og_handler_relationship' => 'includes/views/handlers/og_handler_relationship.inc',
     'og_handler_relationship_membership_roles' => 'includes/views/handlers/og_handler_relationship_membership_roles.inc',
-    'OgEntityAPIController' => 'includes/og.entity.controller.inc',
+    'OgEntityAPIController' => 'includes/og_entity_api_controller.inc',
+    'OgEntityAPIControllerExportable' => 'includes/og_entity_api_controller_exportable.inc',
     'OgSelectionHandler' => 'plugins/entityreference/selection/OgSelectionHandler.class.php',
     'OgBehaviorHandler' => 'plugins/entityreference/behavior/OgBehaviorHandler.class.php',
     'OgWidgetHandler' => 'plugins/entityreference/behavior/OgWidgetHandler.class.php',
