@@ -1017,8 +1017,8 @@ function og_ui_node_type_save($bundle_name) {
 
   if ($config->get('settings')['og_group_content_type'] && !og_is_group_content_type('node', $bundle_name)) {
     $og_field = og_fields_info(OG_AUDIENCE_FIELD);
-    $og_field['field']['target_type'] = $config->get('target_type_' . $bundle_name);
-    $og_field['field']['settings']['handler_settings']['target_bundles'] = $config->get('target_bundles_' . $bundle_name);
+    $og_field['field']['target_type'] = $config->get('settings')['target_type'];
+    $og_field['field']['settings']['handler_settings']['target_bundles'] = $config->get('settings')['target_bundles'];
     og_create_field(OG_AUDIENCE_FIELD, 'node', $bundle_name, $og_field);
   }
 
