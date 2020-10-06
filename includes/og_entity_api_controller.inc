@@ -651,7 +651,7 @@ class OgEntityAPIController extends DrupalDefaultEntityController implements OgE
   public function view($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
     // For Field API and entity_prepare_view, the entities have to be keyed by
     // (numeric) id.
-    $entities = entity_key_array_by_property($entities, $this->idKey);
+    $entities = og_entity_key_array_by_property($entities, $this->idKey);
     if (!empty($this->entityInfo['fieldable'])) {
       field_attach_prepare_view($this->entityType, $entities, $view_mode);
     }

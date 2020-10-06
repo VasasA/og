@@ -77,7 +77,7 @@ class OgEntityAPIControllerExportable extends OgEntityAPIController {
     }
 
     $entities_by_id = parent::load($ids, $conditions);
-    $entities += entity_key_array_by_property($entities_by_id, $this->nameKey);
+    $entities += og_entity_key_array_by_property($entities_by_id, $this->nameKey);
 
     // Ensure that the returned array is keyed by numeric id and ordered the
     // same as the original $ids array and remove any invalid ids.
@@ -145,7 +145,7 @@ class OgEntityAPIControllerExportable extends OgEntityAPIController {
     $this->entityCache += $entities;
     // If we have a name key, also support static caching when loading by name.
     if ($this->nameKey != $this->idKey) {
-      $this->entityCacheByName += entity_key_array_by_property($entities, $this->nameKey);
+      $this->entityCacheByName += og_entity_key_array_by_property($entities, $this->nameKey);
     }
   }
 
@@ -178,7 +178,7 @@ class OgEntityAPIControllerExportable extends OgEntityAPIController {
     // For entities with a name key, pass the entities keyed by name to the
     // specific load hook.
     if ($this->nameKey != $this->idKey) {
-      $entities_by_name = entity_key_array_by_property($queried_entities, $this->nameKey);
+      $entities_by_name = og_entity_key_array_by_property($queried_entities, $this->nameKey);
     }
     else {
       $entities_by_name = $queried_entities;
@@ -212,7 +212,7 @@ class OgEntityAPIControllerExportable extends OgEntityAPIController {
       parent::delete($ids, $transaction);
 
       foreach ($entities as $id => $entity) {
-        if (entity_has_status($this->entityType, $entity, ENTITY_IN_CODE)) {
+        if (og_entity_has_status($this->entityType, $entity, ENTITY_IN_CODE)) {
           entity_defaults_rebuild(array($this->entityType));
           break;
         }
@@ -228,10 +228,10 @@ class OgEntityAPIControllerExportable extends OgEntityAPIController {
       // To ease figuring out whether this is a revert, make sure that the
       // entity status is updated in case the providing module has been
       // disabled.
-      if (entity_has_status($this->entityType, $entity, ENTITY_IN_CODE) && !module_exists($entity->{$this->moduleKey})) {
+      if (og_entity_has_status($this->entityType, $entity, ENTITY_IN_CODE) && !module_exists($entity->{$this->moduleKey})) {
         $entity->{$this->statusKey} = ENTITY_CUSTOM;
       }
-      $is_revert = entity_has_status($this->entityType, $entity, ENTITY_IN_CODE);
+      $is_revert = og_entity_has_status($this->entityType, $entity, ENTITY_IN_CODE);
     }
 
     if (!empty($this->entityInfo['fieldable']) && function_exists($function = 'field_attach_' . $hook)) {
@@ -269,7 +269,7 @@ class OgEntityAPIControllerExportable extends OgEntityAPIController {
       $entity->original = entity_load_unchanged($this->entityType, $entity->{$this->nameKey});
     }
     // Update the status for entities getting overridden.
-    if (entity_has_status($this->entityType, $entity, ENTITY_IN_CODE) && empty($entity->is_rebuild)) {
+    if (og_entity_has_status($this->entityType, $entity, ENTITY_IN_CODE) && empty($entity->is_rebuild)) {
       $entity->{$this->statusKey} |= ENTITY_CUSTOM;
     }
     return parent::save($entity, $transaction);

@@ -4055,3 +4055,46 @@ function og_entityreference_behavior_plugins() {
   );
   return $plugins;
 }
+
+/**
+ * Converts an array of entities to be keyed by the values of a given property.
+ * This function is copied from Drupal 7 Entity module's entity.module file.
+ *
+ * @param array $entities
+ *   The array of entities to convert.
+ * @param $property
+ *   The name of entity property, by which the array should be keyed. To get
+ *   reasonable results, the property has to have unique values.
+ *
+ * @return array
+ *   The same entities in the same order, but keyed by their $property values.
+ */
+function og_entity_key_array_by_property(array $entities, $property) {
+  $ret = array();
+  foreach ($entities as $entity) {
+    $key = isset($entity->$property) ? $entity->$property : NULL;
+    $ret[$key] = $entity;
+  }
+  return $ret;
+}
+
+/**
+ * Checks if a given entity has a certain exportable status.
+ * This function is copied from Drupal 7 Entity module's entity.module file.
+ *
+ * @param $entity_type
+ *   The type of the entity.
+ * @param $entity
+ *   The entity to check the status on.
+ * @param $status
+ *   The constant status like ENTITY_CUSTOM, ENTITY_IN_CODE, ENTITY_OVERRIDDEN
+ *   or ENTITY_FIXED.
+ *
+ * @return
+ *   TRUE if the entity has the status, FALSE otherwise.
+ */
+function og_entity_has_status($entity_type, $entity, $status) {
+  $info = entity_get_info($entity_type);
+  $status_key = empty($info['entity keys']['status']) ? 'status' : $info['entity keys']['status'];
+  return isset($entity->{$status_key}) && ($entity->{$status_key} & $status) == $status;
+}
