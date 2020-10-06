@@ -219,7 +219,7 @@ class OgEntityAPIController extends DrupalDefaultEntityController implements OgE
     $passed_ids = !empty($ids) ? array_flip($ids) : FALSE;
 
     // Try to load entities from the static cache.
-    if ($this->cache && !$revision_id) {
+    if (isset($this->cache) && $this->cache && !$revision_id) {
       $entities = $this->cacheGet($ids, $conditions);
       // If any entities were loaded, remove them from the ids still to load.
       if ($passed_ids) {
@@ -288,7 +288,7 @@ class OgEntityAPIController extends DrupalDefaultEntityController implements OgE
       EntityCacheControllerHelper::entityCacheSet($this, $queried_entities);
     }
 
-    if ($this->cache) {
+    if (isset($this->cache) && $this->cache) {
       // Add entities to the cache if we are not loading a revision.
       if (!empty($queried_entities) && !$revision_id) {
         $this->cacheSet($queried_entities);
