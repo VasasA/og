@@ -40,7 +40,7 @@ class OgMembershipType extends Entity {
     );
   }
 
-  public function __construct(array $values) {
+  public function __construct(array $values = array()) {
     parent::__construct($values, 'og_membership_type');
   }
 }
